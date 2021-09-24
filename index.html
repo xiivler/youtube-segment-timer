@@ -7,28 +7,32 @@
     <meta name="version" content="1.1.1" />
     <title>YouTube Frame Timer</title>
     <link rel="stylesheet" href="https://stackedit.io/style.css" />
-    <link rel="stylesheet" href="style.css" />
     <script src="main.js"></script>
   </head>
 
-  <body>
-      <h1>YouTube Frame Timer</h1>
+  <body class = "stackedit">
+    <div class = "main_div">
+      <h1>YouTube Segment Timer</h1>
       <p>
-        Determines the time of a segment within a YouTube video in 60 FPS frames and in milliseconds. You can use the <code>,</code> and <code>.</code> keys to advance forward and backward one frame.
+        Determines the time of a segment within a YouTube video in 60 FPS frames and in milliseconds. When the video is paused, you can use the <code>,</code> and <code>.</code> keys to advance forward and backward one frame at a time.
       </p>
       <h3>Video URL</h3>
       <p>
         <input type="text" id="youtubeId" style='width:50%' onchange='loadVideo()' />
         <button id="loadVideo" onclick="loadVideo()">Load Video</button>
       </p>   
-    <p id ="debug"></p>
-    <p id ="debug2"></p>
     
-    <h3>Select Start Frame</h3>
-    <div id = "player1"></div>
-    
-    <h3>Select End Frame</h3>
-    <div id = "player2"></div>
+    <div>
+      <div style="float:left;">
+        <h3>Start Frame</h3>
+        <iFrame id = "player1" width = 410 height = 340 src="https://www.youtube.com/embed/?enablejsapi=1"frameborder="0"></iFrame>
+      </div>
+      <div style="float:right;">
+        <h3>End Frame</h3>
+        <iFrame id = "player2" width = 410 height = 340 src="https://www.youtube.com/embed/?enablejsapi=1"frameborder="0" ></iFrame>
+      </div>
+      <div style="clear:both;"></div>
+    </div>
 
     <h3>Segment Time</h3>
     <p>
@@ -39,5 +43,6 @@
       <label for="msiTime"><code>(hh:mm:ss.ms)</code> </label>
       <input type="text" id="msTime" style='width:40' readonly />
     </p>
+    </div>
   </body>
 </html>
