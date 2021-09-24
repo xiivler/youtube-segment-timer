@@ -8,8 +8,8 @@
  var player2;
 
  function onYouTubeIframeAPIReady() {
-   player1 = new YT.Player('player1', {width: 480, height: 360});
-   player2 = new YT.Player('player2', {width: 480, height: 360});
+   player1 = new YT.Player('player1');
+   player2 = new YT.Player('player2');
  }
 
  var currentStartTime = 0;
@@ -76,13 +76,18 @@
   
  }
  var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+ var regExpTime = /(?<=\?t=|\&t=)([^&\n?#]+)/;
  
  function loadVideo() {
    let url = document.getElementById('youtubeId').value;
    let match = url.match(regExp);
    if (match && match[2].length == 11) {
-     player1.cueVideoById(match[2]);
-     player2.cueVideoById(match[2]);
+     let start = 0;
+  	 let timeData = url.match(regExpTime);
+   	 if (timeData)
+     	 start = timeData[0];
+     player1.cueVideoById(match[2], start);
+     player2.cueVideoById(match[2], start);
    }
  }
  
