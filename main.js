@@ -60,6 +60,11 @@
  function calculate() {
   let time = currentEndTime - currentStartTime;
   
+  if (currentStartTime < 0)
+  	currentStartTime = 0;
+  if (currentEndTime < 0)
+  	currentEndTime = 0;
+  
   let startSeconds = Math.floor(currentStartTime);
   let startFrames = Math.round((currentStartTime - startSeconds) * 60);
   
