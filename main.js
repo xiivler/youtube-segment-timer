@@ -8,8 +8,8 @@
  var player2;
 
  function onYouTubeIframeAPIReady() {
-   player1 = new YT.Player('player1', {width: 410, height: 250});
-   player2 = new YT.Player('player2', {width: 410, height: 250});
+   player1 = new YT.Player('player1', {width: 480, height: 360});
+   player2 = new YT.Player('player2', {width: 480, height: 360});
  }
 
  var currentStartTime = 0;
