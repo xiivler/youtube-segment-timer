@@ -58,7 +58,6 @@
  }
 
  function calculate() {
-  let time = currentEndTime - currentStartTime;
   
   if (currentStartTime < 0)
   	currentStartTime = 0;
@@ -66,13 +65,18 @@
   	currentEndTime = 0;
   
   let startSeconds = Math.floor(currentStartTime);
-  let startFrames = Math.round((currentStartTime - startSeconds) * 60);
+  let startFrames = Math.ceil((currentStartTime - startSeconds) * 60);
   
   let endSeconds = Math.floor(currentEndTime);
-  let endFrames = Math.round((currentEndTime - endSeconds) * 60);
+  let endFrames = Math.ceil((currentEndTime - endSeconds) * 60);
   
-  let seconds = Math.floor(time);
-  let frames = Math.round((time - seconds) * 60);
+  let seconds = endSeconds - startSeconds;
+  let frames = endFrames - startFrames;
+  
+  if (frames < 0) {
+  	frames += 60;
+    seconds--;
+  }
   
   let startFrameTime = String(startSeconds).padStart(2, '0') + ':' + String(startFrames).padStart(2, '0');
   document.getElementById('startFrameTime').value = startFrameTime;
