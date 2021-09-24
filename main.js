@@ -29,7 +29,7 @@
      if (!justPaused && (Math.abs(diffFrames - 1) < 0.001 || Math.abs(diffFrames - 2) < 0.002))
        currentStartTime = player1.getCurrentTime();
      else {
-       let adjustedTime = Math.ceil(player1.getCurrentTime() * 30) / 30 - 0.007;
+       let adjustedTime = Math.ceil(player1.getCurrentTime() * 30) / 30 - 0.00833;
        player1.seekTo(adjustedTime, true);
        currentStartTime = adjustedTime;
      }
@@ -47,7 +47,7 @@
      if (!justPaused && (Math.abs(diffFrames - 1) < 0.001 || Math.abs(diffFrames - 2) < 0.002))
        currentEndTime = player2.getCurrentTime();
      else {
-       let adjustedTime = Math.ceil(player2.getCurrentTime() * 30) / 30 - 0.007;
+       let adjustedTime = Math.ceil(player2.getCurrentTime() * 30) / 30 - 0.00833;
        player2.seekTo(adjustedTime, true);
        currentEndTime = adjustedTime;
      }
