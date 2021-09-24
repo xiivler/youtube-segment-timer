@@ -8,8 +8,8 @@
  var player2;
 
  function onYouTubeIframeAPIReady() {
-   player1 = new YT.Player('player1');
-   player2 = new YT.Player('player2');
+   player1 = new YT.Player('player1', {events: {'onStateChange': onPlayerStateChange}});
+   player2 = new YT.Player('player2', {events: {'onStateChange': onPlayerStateChange}});
  }
 
  var currentStartTime = 0;
@@ -18,17 +18,18 @@
  var monitor = setInterval(update, 100);
 
  function update() {
-  if (adjust())
+  if (adjust(false))
   	calculate();
  }
  
- function adjust() {
+ function adjust(justPaused) {
  	let adjustment = false;
    if (player1.getPlayerState() == YT.PlayerState.PAUSED && currentStartTime != player1.getCurrentTime()) {
-     if (Math.abs(player1.getCurrentTime() - currentStartTime) * 60 - 1 < 0.0001)
+     let diffFrames = Math.abs(player1.getCurrentTime() - currentStartTime) * 60;
+     if (!justPaused && (Math.abs(diffFrames - 1) < 0.001 || Math.abs(diffFrames - 2) < 0.002))
        currentStartTime = player1.getCurrentTime();
      else {
-       let adjustedTime = Math.round(player1.getCurrentTime() * 30) / 30;
+       let adjustedTime = Math.ceil(player1.getCurrentTime() * 30) / 30;
        player1.seekTo(adjustedTime, true);
        currentStartTime = adjustedTime;
      }
@@ -40,13 +41,13 @@
      if (player2.getPlayerState() == YT.PlayerState.CUED)
        player2.pauseVideo();
      currentEndTime = currentStartTime;
-     adjustment = true;
    }
    else if (player2.getPlayerState() == YT.PlayerState.PAUSED && currentEndTime != player2.getCurrentTime()) {
-     if (Math.abs(player2.getCurrentTime() - currentEndTime) * 60 - 1 < 0.0001)
+     let diffFrames = Math.abs(player2.getCurrentTime() - currentEndTime) * 60;
+     if (!justPaused && (Math.abs(diffFrames - 1) < 0.001 || Math.abs(diffFrames - 2) < 0.002))
        currentEndTime = player2.getCurrentTime();
      else {
-       let adjustedTime = Math.round(player2.getCurrentTime() * 30) / 30;
+       let adjustedTime = Math.ceil(player2.getCurrentTime() * 30) / 30;
        player2.seekTo(adjustedTime, true);
        currentEndTime = adjustedTime;
      }
@@ -57,7 +58,7 @@
  }
 
  function calculate() {
-  let time = player2.getCurrentTime() - player1.getCurrentTime();
+  let time = currentEndTime - currentStartTime;
   
   let seconds = Math.floor(time);
   let frames = Math.round((time - seconds) * 60);
@@ -91,9 +92,7 @@
    }
  }
  
- function onStateChangePlayer1(event) {
- 	if (event.data == YT.PlayerState.CUED) {
- 		player1.playVideo();
-  	player1.pauseVideo();
-  }
+ function onPlayerStateChange(event) {
+ 	if (adjust(true))
+  	calculate();
  }
