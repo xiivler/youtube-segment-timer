@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="version" content="1.1.1" />
+    <title>YouTube Frame Timer</title>
+    <link rel="stylesheet" href="https://stackedit.io/style.css" />
+    <link rel="stylesheet2" href="style.css" />
+    <script src="main.js"></script>
+  </head>
+
+  <body>
+      <h1>YouTube Frame Timer</h1>
+      <p>
+        Determines the time of a segment within a YouTube video in 60 FPS frames and in milliseconds. You can use the <code>,</code> and <code>.</code> keys to advance forward and backward one frame.
+      </p>
+      <h3>Video URL</h3>
+      <p>
+        <input type="text" id="youtubeId" style='width:50%' onchange='loadVideo()' />
+        <button id="loadVideo" onclick="loadVideo()">Load Video</button>
+      </p>   
+    <p id ="debug"></p>
+    <p id ="debug2"></p>
+    
+    <h3>Select Start Frame</h3>
+    <iFrame id = "player1" width = 480 height = 292.5 src="https://www.youtube.com/embed/"></iFrame>
+    
+    <h3>Select End Frame</h3>
+    <iFrame id = "player2" width = 480 height = 292.5 src="https://www.youtube.com/embed/"></iFrame>
+
+    <h3>Segment Time</h3>
+    <p>
+      <label for="frameTime"><code>(ss:ff)</code> </label>
+      <input type="text" id="frameTime" style='width:40' readonly />
+    </p>
+    <p>
+      <label for="msiTime"><code>(hh:mm:ss.ms)</code> </label>
+      <input type="text" id="msTime" style='width:40' readonly />
+    </p>
+  </body>
+</html>
