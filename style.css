@@ -1,0 +1,12 @@
+body {
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  }
+
+iframe {
+  margin: 0 auto;
+  display: block;
+  border-style: none;
+}
