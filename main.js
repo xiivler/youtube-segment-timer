@@ -60,8 +60,20 @@
  function calculate() {
   let time = currentEndTime - currentStartTime;
   
+  let startSeconds = Math.floor(currentStartTime);
+  let startFrames = Math.round((currentStartTime - startSeconds) * 60);
+  
+  let endSeconds = Math.floor(currentEndTime);
+  let endFrames = Math.round((currentEndTime - endSeconds) * 60);
+  
   let seconds = Math.floor(time);
   let frames = Math.round((time - seconds) * 60);
+  
+  let startFrameTime = String(startSeconds).padStart(2, '0') + ':' + String(startFrames).padStart(2, '0');
+  document.getElementById('startFrameTime').value = startFrameTime;
+  
+  let endFrameTime = String(endSeconds).padStart(2, '0') + ':' + String(endFrames).padStart(2, '0');
+  document.getElementById('endFrameTime').value = endFrameTime;
 
   let frameTime = String(seconds).padStart(2, '0') + ':' + String(frames).padStart(2, '0');
   document.getElementById('frameTime').value = frameTime;
