@@ -1,2 +1,2 @@
 # YouTube Segment Timer
-For frame timing segments within YouTube videos.
+For timing segments within YouTube videos in 60 FPS frames and in milliseconds.
