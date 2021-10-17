@@ -15,15 +15,20 @@
  var currentStartTime = 0;
  var currentEndTime = 0;
 
+ var settingStartToEnd = false;
+ 
  var monitor = setInterval(update, 100);
 
  function update() {
-  if (adjust(false))
-  	calculate();
+  if (!settingStartToEnd)
+    if (adjust(false))
+      calculate();
  }
  
  function adjust(justPaused) {
+
  	let adjustment = false;
+  
    if (player1.getPlayerState() == YT.PlayerState.PAUSED && currentStartTime != player1.getCurrentTime()) {
      let diffFrames = Math.abs(player1.getCurrentTime() - currentStartTime) * 60;
      if (!justPaused && (Math.abs(diffFrames - 1) < 0.001 || Math.abs(diffFrames - 2) < 0.002))
@@ -64,26 +69,26 @@
   if (currentEndTime < 0)
   	currentEndTime = 0;
   
-  let startSeconds = Math.floor(currentStartTime);
-  let startFrames = Math.ceil((currentStartTime - startSeconds) * 60);
+  //get times in frames
+  let rawStartFrames = Math.ceil(currentStartTime * 60);
+  let rawEndFrames = Math.ceil(currentEndTime * 60);
+  let rawFrames = rawEndFrames - rawStartFrames;
   
-  let endSeconds = Math.floor(currentEndTime);
-  let endFrames = Math.ceil((currentEndTime - endSeconds) * 60);
-  
-  let seconds = endSeconds - startSeconds;
-  let frames = endFrames - startFrames;
-  
-  if (frames < 0) {
-  	frames += 60;
-    seconds--;
-  }
+  let startSeconds = Math.floor(rawStartFrames / 60);
+  let startFrames = rawStartFrames % 60;
   
   let startFrameTime = String(startSeconds).padStart(2, '0') + ':' + String(startFrames).padStart(2, '0');
   document.getElementById('startFrameTime').value = startFrameTime;
   
+  let endSeconds = Math.floor(rawEndFrames / 60);
+  let endFrames = rawEndFrames % 60;
+  
   let endFrameTime = String(endSeconds).padStart(2, '0') + ':' + String(endFrames).padStart(2, '0');
   document.getElementById('endFrameTime').value = endFrameTime;
-
+  
+  let seconds = Math.floor(rawFrames / 60);
+  let frames = rawFrames % 60;
+  
   let frameTime = String(seconds).padStart(2, '0') + ':' + String(frames).padStart(2, '0');
   document.getElementById('frameTime').value = frameTime;
   
@@ -116,4 +121,14 @@
  function onPlayerStateChange(event) {
  	if (adjust(true))
   	calculate();
+ }
+ 
+ function setStartToEnd() {
+     player1.seekTo(currentEndTime, true);
+     if (player1.getPlayerState() == YT.PlayerState.CUED)
+       player1.pauseVideo();
+     currentStartTime = currentEndTime;
+     calculate();
+     settingStartToEnd = true;
+     setTimeout(function(){settingStartToEnd = false;}, 500);
  }
