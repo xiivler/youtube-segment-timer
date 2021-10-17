@@ -30,6 +30,7 @@
     	player1.pauseVideo();
       player2.pauseVideo();
       newVideo = false;
+      calculate();
     }
   }
   
