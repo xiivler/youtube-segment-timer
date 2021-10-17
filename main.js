@@ -46,6 +46,7 @@
      if (player2.getPlayerState() == YT.PlayerState.CUED)
        player2.pauseVideo();
      currentEndTime = currentStartTime;
+     adjustment = true;
    }
    else if (player2.getPlayerState() == YT.PlayerState.PAUSED && currentEndTime != player2.getCurrentTime()) {
      let diffFrames = Math.abs(player2.getCurrentTime() - currentEndTime) * 60;
