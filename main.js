@@ -16,11 +16,25 @@
  var currentEndTime = 0;
 
  var settingStartToEnd = false;
+ var newVideo = false;
  
  var monitor = setInterval(update, 100);
 
  function update() {
-  if (!settingStartToEnd)
+  
+  //if a new video is loaded, make sure it starts at the desired time
+  if (newVideo) {
+  	player1.seekTo(currentStartTime);
+    player2.seekTo(currentEndTime);
+    if (player1.getCurrentTime() == currentStartTime && player2.getCurrentTime() == currentEndTime) {
+    	player1.pauseVideo();
+      player2.pauseVideo();
+      newVideo = false;
+    }
+  }
+  
+  //otherwise adjust the time unless it is setting the start time to the end time
+  else if (!settingStartToEnd)
     if (adjust(false))
       calculate();
  }
@@ -113,9 +127,14 @@
      let start = 0;
   	 let timeData = url.match(regExpTime);
    	 if (timeData)
-     	 start = timeData[0];
+     	 start = timeData[0] - 0.00833;
+     if (start < 0)
+     	start = 0;
      player1.cueVideoById(match[2], start);
      player2.cueVideoById(match[2], start);
+     newVideo = true;
+     currentStartTime = start;
+     currentEndTime = start;
    }
  }
  
