@@ -7,7 +7,6 @@
     <meta name="version" content="1.1.1" />
     <title>YouTube Frame Timer</title>
     <link rel="stylesheet" href="https://stackedit.io/style.css" />
-    <link rel="stylesheet" href="style.css" />
     <script src="main.js"></script>
   </head>
 
@@ -28,6 +27,7 @@
         <h3>Start Frame</h3>
         <iFrame id = "player1" width = 410 height = 340 src="https://www.youtube.com/embed/?enablejsapi=1" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iFrame>
         <p><input type="text" id="startFrameTime" style='width:40' readonly /></p>
+        <p><button id="sync" onclick="setStartToEnd()">Set to Current End Frame</button></p>
       </div>
       <div style="float:left; margins">
         <h3>End Frame</h3>
